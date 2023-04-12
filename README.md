@@ -1,5 +1,5 @@
 # PHP Session Wrapper
-This library wraps the session management into a class, it is possible to utilize different ways of storing the session (other then PHP standard) via implementing a new class from SessionInterface, or use the esting classes
+This library wraps the session management into a class, it is possible to utilize different ways of storing the session (other then PHP standard) via implementing a new class from SessionInterface, or use one of the existing class
 ## !!! This is a work in progress !!!
 
 Features:
