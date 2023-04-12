@@ -13,7 +13,6 @@ class ClassLoadsTest extends TestCase
     public function testClassLoads(): void
     {
         $mock = $this->getMockForAbstractClass(SessionInterface::class);
-
         $session = new Session($mock);
         
         $this->assertEquals('object', gettype($session));

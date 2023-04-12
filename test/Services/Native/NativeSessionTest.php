@@ -34,6 +34,7 @@ class NativeSessionTest extends TestCase
         $key = 'test';
         $value = 'Session variable';
         $_SESSION[$key] = $value;
+
         $session = new NativeSession();
         $result = $session->get($key);
         
@@ -44,24 +45,26 @@ class NativeSessionTest extends TestCase
     {
         $key = 'test';
         $value = 'Session variable';
+
         $key2 = 'test2';
         $value2 = 'Session variable 2';
+
         $_SESSION[$key] = $value;
         $_SESSION[$key2] = $value2;
+
         $session = new NativeSession();
         $result = $session->getAll();
 
         $this->assertCount(2, $result);
+
         $keys = array_keys($result);
         $values = array_values($result);
 
         $this->assertEquals($key, $keys[0]);
         $this->assertEquals($value, $values[0]);
-
         $this->assertEquals($key2, $keys[1]);
         $this->assertEquals($value2, $values[1]);
     }
-    
 
     public function testSetSession(): void
     {
@@ -70,6 +73,7 @@ class NativeSessionTest extends TestCase
         
         $session = new NativeSession();
         $session->set($key, $value);
+
         $result = $session->get($key);
         
         $this->assertEquals($value, $result);
@@ -82,6 +86,7 @@ class NativeSessionTest extends TestCase
         $session = new NativeSession();
         $session->set($key, 'test value');
         $session->delete($key);
+
         $result = $session->get($key);
 
         $this->assertNull($result);

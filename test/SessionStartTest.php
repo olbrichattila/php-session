@@ -11,10 +11,12 @@ use PHPUnit\Framework\TestCase;
 class SessionStartTest extends TestCase
 {
     private SessionInterface $mock;
+
     public function setUp(): void
     {
         $this->mock = $this->getMockForAbstractClass(SessionInterface::class);
     }
+
     public function testSessionStarts(): void
     {
         $this->mock->expects($this->once())
@@ -35,6 +37,7 @@ class SessionStartTest extends TestCase
         $session = new Session($this->mock);
         $session->destroy();
     }
+
     public function testGet(): void
     {
         $this->mock->expects($this->once())
