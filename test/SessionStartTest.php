@@ -10,14 +10,18 @@ use PHPUnit\Framework\TestCase;
 
 class SessionStartTest extends TestCase
 {
+    private SessionInterface $mock;
+    public function setUp(): void
+    {
+        $this->mock = $this->getMockForAbstractClass(SessionInterface::class);
+    }
     public function testSessionStarts(): void
     {
-        $mock = $this->getMockForAbstractClass(SessionInterface::class);
-        $mock->expects($this->once())
+        $this->mock->expects($this->once())
             ->method('start')
             ->willReturn('12345678');
 
-        $session = new Session($mock);
+        $session = new Session($this->mock);
         $sessionId = $session->start();
         
         $this->assertGreaterThan(7, $sessionId);
@@ -25,22 +29,20 @@ class SessionStartTest extends TestCase
 
     public function testDestroy(): void
     {
-        $mock = $this->getMockForAbstractClass(SessionInterface::class);
-        $mock->expects($this->once())
+        $this->mock->expects($this->once())
             ->method('destroy');
 
-        $session = new Session($mock);
+        $session = new Session($this->mock);
         $session->destroy();
     }
     public function testGet(): void
     {
-        $mock = $this->getMockForAbstractClass(SessionInterface::class);
-        $mock->expects($this->once())
+        $this->mock->expects($this->once())
             ->method('get')
             ->with('key')
             ->willReturn('return value');
 
-        $session = new Session($mock);
+        $session = new Session($this->mock);
         $value = $session->get('key');
 
         $this->assertEquals('return value', $value);
@@ -48,12 +50,11 @@ class SessionStartTest extends TestCase
 
     public function testGetAll(): void
     {
-        $mock = $this->getMockForAbstractClass(SessionInterface::class);
-        $mock->expects($this->once())
+        $this->mock->expects($this->once())
             ->method('getAll')
             ->willReturn([1,2]);
 
-        $session = new Session($mock);
+        $session = new Session($this->mock);
         $result = $session->getAll();
 
         $this->assertEquals([1,2], $result);
@@ -61,23 +62,21 @@ class SessionStartTest extends TestCase
 
     public function testSet(): void
     {
-        $mock = $this->getMockForAbstractClass(SessionInterface::class);
-        $mock->expects($this->once())
+        $this->mock->expects($this->once())
             ->method('set')
             ->with('key', 'value');
 
-        $session = new Session($mock);
+        $session = new Session($this->mock);
         $session->set('key', 'value');
     }
 
     public function testDelete(): void
     {
-        $mock = $this->getMockForAbstractClass(SessionInterface::class);
-        $mock->expects($this->once())
+        $this->mock->expects($this->once())
             ->method('delete')
             ->with('key');
 
-        $session = new Session($mock);
+        $session = new Session($this->mock);
         $session->delete('key');
     }
 }
