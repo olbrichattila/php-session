@@ -1,0 +1,21 @@
+{
+    "name": "aolbrich/php-session",
+    "description": "PHP session management encapsulation",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Aolbrich\\PhpSession\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Attila Olbrich",
+            "email": "olbrichattila@gmx.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "aolbrich/php-di-container": "^1.0"
+    }
+}
