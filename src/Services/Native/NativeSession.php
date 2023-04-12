@@ -16,6 +16,7 @@ class NativeSession implements SessionInterface
 
     public function destroy(): void
     {
+        // @TODO with TDD
     }
 
     public function get(string $key): mixed

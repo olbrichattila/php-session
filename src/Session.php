@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Aolbrich\PhpSession;
 
-use Aolbrich\PhpDiContainer\Container;
 use Aolbrich\PhpSession\Interfaces\SessionInterface;
 
 class Session implements SessionInterface
 {
-    protected SessionInterface $sessionService;
-
-    public function __construct(SessionInterface $sessionService)
+    public function __construct(protected readonly SessionInterface $sessionService)
     {
-        $this->sessionService = $sessionService;
     }
 
     public function start(): string
