@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Aolbrich\PhpSession\Services\Native\NativeSession;
+// use Aolbrich\PhpSession\Services\Native\NativeSession;
+use Aolbrich\PhpSession\Services\File\FileSession;
 use Aolbrich\PhpSession\Interfaces\SessionInterface;
 use Aolbrich\PhpDiContainer\Container;
 use Aolbrich\PhpSession\Session;
@@ -11,7 +12,8 @@ require_once realpath(__DIR__ . '/../../vendor') . '/autoload.php';
 
 // Bind here which servie provider you would like to use, like native, file, redis, mongodb....
 $bindings = [
-    SessionInterface::class => NativeSession::class
+    // SessionInterface::class => NativeSession::class
+    SessionInterface::class => FileSession::class
 ];
 $container = new Container($bindings);
 $session = $container->get(Session::class);

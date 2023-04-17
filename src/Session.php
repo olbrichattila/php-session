@@ -9,8 +9,9 @@ use Aolbrich\PhpSession\Interfaces\SessionInterface;
 
 class Session implements SessionInterface
 {
-    public function __construct(protected readonly SessionInterface $sessionService)
-    {
+    public function __construct(
+        protected readonly SessionInterface $sessionService
+    ) {
     }
 
     public function start(): string
