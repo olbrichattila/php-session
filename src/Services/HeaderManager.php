@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Aolbrich\PhpSession\Services;
+use SebastianBergmann\Type\VoidType;
 
 class HeaderManager
 {
@@ -12,6 +13,9 @@ class HeaderManager
     // @todo get this from config
     protected string $sessionPrefix = "test_sessid_";
 
+    // @todo get this from config, 86400 = 1 day, allow null as browser session only cookie via setting it to null
+    protected int $ttl = 0; 
+
     public function sessionId(): string
     {
         $sessionId = $this->headerSessionId();
@@ -20,6 +24,14 @@ class HeaderManager
         }
 
         return $this->setHeaderSessionId($this->generateSessionId());
+    }
+
+    public function destroy(): void
+    {
+        if(isset($_COOKIE[$this->cookieName])) {
+            unset($this->cookieName);
+            setcookie($this->cookieName, '', time() - 3600, '/');
+        }
     }
 
     protected function headerSessionId(): ?string
@@ -33,8 +45,7 @@ class HeaderManager
 
     protected function setHeaderSessionId(string $sessionId): string
     {
-        $time = time() + (86400 * 30); // 86400 = 1 day, @todo get this from config, allow cookie only valid for browser session
-        setcookie($this->cookieName, $sessionId, time() + (86400 * 30), "/"); 
+        setcookie($this->cookieName, $sessionId, $this->ttl, "/"); 
 
         return $sessionId;
     }

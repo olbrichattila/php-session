@@ -21,10 +21,12 @@ $session = $container->get(Session::class);
 // Start session
 $session->start();
 
-// set keys
+// // set keys
 $session->set('sessionKey1', 'Value1');
 $session->set('sessionKey2', 'Value2');
 
 // display the results
 echo $session->get('sessionKey1');
 print_r($session->getAll());
+
+// $session->destroy();

@@ -11,23 +11,30 @@ class FileSession implements SessionInterface
 {
     protected string $sessionName;
 
-    public function __construct(protected readonly HeaderManager $headermanager) {
-        $this->sessionName = $headermanager->sessionId();
+    public function __construct(protected readonly HeaderManager $headerManager)
+    {
+        $this->sessionName = $headerManager->sessionId();
     }
 
     public function start(): string
     {
-        return $this->headermanager->sessionId();
+        return $this->headerManager->sessionId();
     }
 
     public function destroy(): void
     {
+        $sessionFileName = $this->getFileName();
+        if (file_exists($sessionFileName)) {
+            unlink($sessionFileName);
+        }
+
+        $this->headerManager->destroy();
     }
 
     public function get(string $key): mixed
     {
         $sessionData = $this->getSessionData();
-        
+
         return $sessionData[$key] ?? null;
     }
 
@@ -50,7 +57,7 @@ class FileSession implements SessionInterface
         if (isset($sessionData[$key])) {
             unset($sessionData[$key]);
         }
-        
+
         $this->setSessionData($sessionData);
     }
 
@@ -59,12 +66,12 @@ class FileSession implements SessionInterface
         $sessionFileName = $this->getFileName();
         if (file_exists($sessionFileName)) {
             $content = unserialize(file_get_contents($sessionFileName));
-            
+
             if (!is_array($content)) {
                 // @TODO create proper exception classes
                 throw new \Exception('Incorrect session data');
             }
-            
+
             return $content;
         }
 
@@ -76,9 +83,11 @@ class FileSession implements SessionInterface
         file_put_contents($sessionFileName, serialize($data));
     }
 
-    protected function getFileName(): string 
+    protected function getFileName(): string
     {
         // @TODO change it to dediceted file path form config, when config implemented
-        return sys_get_temp_dir() . '/' . $this->sessionName;
+        // return $this->sessionName;
+        return realpath('../../sessions/' ). '/' . $this->sessionName;
+        // return sys_get_temp_dir() . '/' . $this->sessionName;
     }
 }
