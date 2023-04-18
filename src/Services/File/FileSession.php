@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Aolbrich\PhpSession\Services\File;
 
-use Aolbrich\PhpSession\Interfaces\SessionInterface;
 use Aolbrich\PhpSession\Services\HeaderManager;
+use Aolbrich\PhpSession\Exceptions\SessionException;
+use Aolbrich\PhpSession\Interfaces\SessionInterface;
 
 class FileSession implements SessionInterface
 {
@@ -68,8 +69,7 @@ class FileSession implements SessionInterface
             $content = unserialize(file_get_contents($sessionFileName));
 
             if (!is_array($content)) {
-                // @TODO create proper exception classes
-                throw new \Exception('Incorrect session data');
+                throw new SessionException('Incorrect session data');
             }
 
             return $content;
@@ -86,8 +86,7 @@ class FileSession implements SessionInterface
     protected function getFileName(): string
     {
         // @TODO change it to dediceted file path form config, when config implemented
-        // return $this->sessionName;
-        return realpath('../../sessions/' ). '/' . $this->sessionName;
+        return realpath(dirname(__FILE__) . '/../../../sessions'). '/' . $this->sessionName;
         // return sys_get_temp_dir() . '/' . $this->sessionName;
     }
 }

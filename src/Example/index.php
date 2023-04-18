@@ -21,7 +21,7 @@ $session = $container->get(Session::class);
 // Start session
 $session->start();
 
-// // set keys
+// set keys
 $session->set('sessionKey1', 'Value1');
 $session->set('sessionKey2', 'Value2');
 

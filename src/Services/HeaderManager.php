@@ -29,9 +29,14 @@ class HeaderManager
     public function destroy(): void
     {
         if(isset($_COOKIE[$this->cookieName])) {
-            unset($this->cookieName);
+            unset($_COOKIE[$this->cookieName]);
             setcookie($this->cookieName, '', time() - 3600, '/');
         }
+    }
+
+    public function cookieName(): string
+    {
+        return $this->cookieName;
     }
 
     protected function headerSessionId(): ?string

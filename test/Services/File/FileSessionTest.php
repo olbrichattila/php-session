@@ -20,7 +20,6 @@ class FileSessionTest extends TestCase
     public function testSetAndGet(): void
     {
         $session = (new Container())->get(FileSession::class);
-        $session->setSessionName('test_name');
         $session->set('key1', 'Data1');
         $session->set('key2', 'Data2');
 
